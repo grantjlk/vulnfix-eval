@@ -25,14 +25,23 @@
 Currently using the existing ARVO database (`arvo.db`) for pipeline development and
 validation. The final evaluation will use the newer dataset being rebuilt once it's ready.
 
-`arvo.db` is too large to commit to the repo (~160MB). Download it with:
+`bug_ids.txt` contains 10 straightforward bugs from `arvo.db` (spanning curl, skia, mupdf,
+imagemagick, harfbuzz, libxml2, wget2, and ffmpeg) used as a proof-of-concept validation set.
+
+`arvo.db` is too large to commit to the repo. Download it with:
 ```bash
 wget https://github.com/n132/ARVO-Meta/releases/download/v3.0.0/arvo.db
 ```
 
 ## Smoke test
 
-Confirm your setup works end-to-end with the built-in hello-world example:
+First, confirm `arvo.db` is in place and all bugs load correctly (no API key needed):
+```bash
+python build_instance.py
+```
+You should see a one-line summary for each of the 10 bugs in `bug_ids.txt`.
+
+Then confirm your model/API setup works with the built-in hello-world example:
 ```bash
 python -m minisweagent.run.hello_world -m gemini/gemini-2.5-flash --task "Create a file called test.txt with the text 'it works' inside it"
 ```
